@@ -56,7 +56,7 @@ nav {
 }
 
 .navbar li {
-  padding: 2rem 1.5rem;
+  padding: 2rem 0.5rem;
 }
 
 .navbar li:hover {
@@ -158,7 +158,6 @@ h2 {
 .delorean {
   z-index: -1;
   display: flex;
-  position: relative;
   left: 5rem;
   max-width: 50%;
   grid-column: 1/3;
