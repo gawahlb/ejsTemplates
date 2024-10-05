@@ -6,7 +6,7 @@ const Util = {}
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  let list = "<ul>"
+  let list = '<ul id="navbar">'
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
@@ -51,6 +51,55 @@ Util.buildClassificationGrid = async function(data){
       grid += '</li>'
     })
     grid += '</ul>'
+  } else { 
+    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+/* **************************************
+* Build the detail view HTML
+* ************************************ */
+Util.buildDetailGrid = async function(data){
+  let grid = '';
+  let vehicle = data
+  if(vehicle){
+    grid =  '<p href="../../inv/detail/'+ vehicle.inv_id 
+      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
+      + 'details"><img src="' + vehicle.inv_image
+      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +' on CSE Motors" /></p>'
+    grid += '<h1>'
+    grid += '<p href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+    + vehicle.inv_make + ' ' + vehicle.inv_model + ' ">' 
+    + vehicle.inv_make + ' ' + vehicle.inv_model + '</p>'
+    grid += '</h1>'
+    
+    grid += '<div class="namePrice">'
+    grid += '<hr />'
+    grid += '<h2>'
+    grid += '<span>$' 
+    + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+    grid += '</h2>'
+    grid += '</div>'
+    grid += '<div class="description">'
+    grid += '<hr />'
+    grid += '<h2>'
+    grid += '<span>' + '<strong>Description:</strong>' + vehicle.inv_description + '</span>'
+    grid += '</h2>'
+    grid += '</div>'
+    grid += '<div class="color">'
+    grid += '<hr />'
+    grid += '<h2>'
+    grid += '<span>' + '<strong>Color:</strong>' + vehicle.inv_color + '</span>'
+    grid += '</h2>'
+    grid += '</div>'
+    grid += '<div class="miles">'
+    grid += '<hr />'
+    grid += '<h2>'
+    grid += '<span>' + '<strong>Miles:</strong>' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</span>'
+    grid += '</h2>'
+    grid += '</div>'
   } else { 
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }

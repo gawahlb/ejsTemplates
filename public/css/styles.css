@@ -47,7 +47,7 @@ nav {
   margin-left: 0;
 }
 
-.navbar {
+#navbar {
   font-size: 1rem;
   display: inline-flex;
   list-style-type: none;
@@ -55,11 +55,16 @@ nav {
   padding: 0;
 }
 
-.navbar li {
+#navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+#navbar li {
   padding: 2rem 0.5rem;
 }
 
-.navbar li:hover {
+#navbar li:hover {
   background-color: white;
   cursor: pointer;
 }
@@ -173,6 +178,59 @@ h2 {
 
 
 
+footer {
+  text-align: center;
+}
+
+#inv-display a{
+  text-decoration: none;
+}
+
+#inv-display li {
+  display: block;
+  text-align: center;
+  border: 1px solid black;
+  max-width: 250px;
+  min-height: 300px;
+  margin: 15px;
+  border-radius: 15px;
+}
+
+#inv-display img {
+  margin: 1rem;
+  margin-top: 0;
+  margin-bottom: auto;
+}
+
+#inv-display hr {
+  border-top: 5px solid black;
+}
+
+#inv-display {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+main h1 {
+  text-align: center;
+}
+
+.namePrice {
+  margin-top: 3rem;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.errorTitle {
+  text-align: center;
+}
+
+.errorMsg {
+  text-align: center;
+  margin-bottom: 10rem;
+}
+
+
 
 
 @media only screen and (min-width: 1000px) {
@@ -193,9 +251,6 @@ header {
   text-align: left;
 }
 
-header a {
-}
-
 #tools {
   justify-self: end;
   position: relative;
@@ -213,6 +268,7 @@ header a {
 
 nav {
   text-align: center;
+  text-decoration: none;
 }
 
 .navbar {
@@ -220,13 +276,11 @@ nav {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  text-decoration: none;
 }
 
 .navbar li {
   padding: 2rem 1.5rem;
-}
-
-.navbar li:hover {
 }
 
 .welcome {
@@ -307,9 +361,6 @@ nav {
   margin-bottom: 15px;
 }
 
-h2 {
-}
-
 .delorean {
   z-index: -1;
   display: flex;
@@ -325,5 +376,47 @@ h2 {
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+}
+
+footer {
+  display: flex;
+}
+
+footer p {
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto;
+}
+
+footer a {
+  justify-content: left;
+  margin-top: 15px;
+}
+
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+main h1 {
+  text-align: left;
+  margin-left: 3rem;
+}
+
+.errorTitle {
+  font-size: 50px;
+  margin-bottom: 10rem;
+}
+
+.errorMsg {
+  margin-bottom: 10rem;
+  font-size: 30px;
+}
+
+footer a {
+  margin-right: -2rem;
 }
 }
