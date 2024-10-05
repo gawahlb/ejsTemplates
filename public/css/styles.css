@@ -230,6 +230,25 @@ main h1 {
   margin-bottom: 10rem;
 }
 
+.detailHeader {
+  text-align: center;
+}
+
+.detailHead img {
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+max-width: 300px;
+height: auto;
+}
+
+.price, .description, .color, .miles {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+}
+
 
 
 
@@ -418,5 +437,22 @@ main h1 {
 
 footer a {
   margin-right: -2rem;
+}
+
+
+
+.detailHead img {
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 0 auto;
+max-width: max-content;
+height: auto;
+}
+
+.price, .description, .color, .miles {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 500px;
 }
 }
