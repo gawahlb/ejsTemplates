@@ -13,6 +13,8 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoutes")
 const utilities = require("./utilities/")
+const session = require("express-session")
+const pool = require('./database/')
 
 /* ***********************
  * View Engine and Templates
