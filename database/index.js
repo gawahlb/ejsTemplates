@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const { idleTimeoutMillis } = require("pg/lib/defaults");
 require("dotenv").config();
 /* ***************
  * Connection Pool
@@ -14,6 +15,7 @@ if (process.env.NODE_ENV == "development") {
       rejectUnauthorized: false,
     },
     connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 0,
 });
 
 // Added for troubleshooting queries
@@ -34,6 +36,7 @@ module.exports = {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 0,
   });
   module.exports = pool;
 }
