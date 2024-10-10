@@ -13,6 +13,7 @@ if (process.env.NODE_ENV == "development") {
     ssl: {
       rejectUnauthorized: false,
     },
+    connectionTimeoutMillis: 5000,
 });
 
 // Added for troubleshooting queries
@@ -32,6 +33,7 @@ module.exports = {
 } else {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    connectionTimeoutMillis: 5000,
   });
   module.exports = pool;
 }
