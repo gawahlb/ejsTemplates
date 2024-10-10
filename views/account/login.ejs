@@ -1,0 +1,22 @@
+<% include('../partials/header') %>
+
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<%- messages() %>
+<div id="loginForm">
+<div id="formFields">
+<form method="POST" action="/account/login" >
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+</div>
+    <input type="submit" value="Login" class="login"><br>
+    <p>No account? <a href="/account/register">Sign-up</a></p>
+</form>
+</div>
+<% include('../partials/footer') %>

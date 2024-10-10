@@ -249,6 +249,36 @@ height: auto;
   text-align: center;
 }
 
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  max-width: 300px;
+  text-align: left;
+  background-color: rgb(195, 255, 236);
+  font-size: 20px;
+  border-radius: 10px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+label {
+  text-align: left;
+}
+
+input {
+  padding: 8px;
+  width: 100%;
+  margin: 1rem 0 1rem 0;
+}
+
+.login, .register {
+  width: 60%;
+  margin-top: 2rem;
+}
 
 
 
