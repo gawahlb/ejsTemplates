@@ -45,6 +45,117 @@ invCont.buildByInvId = async function (req, res, next) {
 
 invCont.intentionalError = function(req, res, next) {
   next(new Error("This is an intentional error."));
-};
+}
 
-module.exports = invCont
+/* ***************************
+ *  Management View
+ * ************************** */
+
+invCont.managementView = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("./inventory/management", {
+    title: "Management",
+    nav,
+  });
+}
+
+/* ***************************
+ *  Add Classification View
+ * ************************** */
+
+async function createClassification(req, res, next) {
+    let nav = await utilities.getNav()
+    res.render("./inventory/add-classification", {
+      title: "Create New Classification",
+      nav,
+      errors: null,
+    })
+  }
+
+  /* ***************************
+ *  Add Vehicle View
+ * ************************** */
+
+async function createVehicle(req, res, next) {
+  let nav = await utilities.getNav()
+  let classificationList = await utilities.buildClassificationList();
+
+  res.render("./inventory/add-vehicle", {
+    title: "Create New Vehicle",
+    nav,
+    classificationList,
+    errors: null,
+  })
+}
+
+
+
+/* ****************************************
+*  Process Classification
+* *************************************** */
+async function registerClassification(req, res) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+
+  const regResult = await invModel.addClassification(
+    classification_name
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Successfully added classification: ${classification_name}.`
+    )
+    res.status(201).render("inventory/management", {
+      title: "Management View",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Classification creation failed.")
+    res.status(501).render("inventory/add-classification", {
+      title: "Create Classification",
+      nav,
+    })
+  }
+}
+
+/* ****************************************
+*  Process Vehicle
+* *************************************** */
+async function registerVehicle(req, res) {
+  let nav = await utilities.getNav()
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+
+  const regResult = await invModel.addVehicle(
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+  console.log('classification_id: ', classification_id)
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Successfully added vehicle: ${inv_make} ${inv_model}.`
+    )
+    res.status(201).render("inventory/management", {
+      title: "Management View",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Vehicle creation failed.")
+    res.status(501).render("inventory/add-vehicle", {
+      title: "Create Vehicle",
+      nav,
+    })
+  }
+}
+
+module.exports = {...invCont, createClassification, createVehicle, registerClassification, registerVehicle}

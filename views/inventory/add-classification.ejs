@@ -1,0 +1,22 @@
+<% include('../partials/header') %>
+
+<h1><%= title %></h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+    
+    <form method="POST" action="/inv/add-classification" id="classificationForm">
+        <label for="classification_name">Classification: </label>
+        <p>Entry cannot contain numbers, spaces, or special characters.</p>
+        <input type="text" name="classification_name" id="classification_name" required pattern="^[A-Za-z]+$"><br>
+        <button type="submit" class="addClassification">Add Classification</button>
+    </form>
+
+<% include('../partials/footer') %>
