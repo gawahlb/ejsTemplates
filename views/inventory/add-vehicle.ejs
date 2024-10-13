@@ -1,5 +1,6 @@
 <% include('../partials/header') %>
 
+<main id="vehicle">
 <h1><%= title %></h1>
 
 <%- messages() %>
@@ -12,7 +13,7 @@
    </ul>
   <% } %>
     
-<form action="/inv/add-vehicle" method="post">
+<form action="/inv/add-vehicle" method="post" id="vehicleForm">
     <label for="inv_make">Make:</label>
     <input type="text" name="inv_make" id="inv_make" required value="<%= locals.inv_make %>"><br>
     <label for="inv_model">Model:</label>
@@ -35,5 +36,5 @@
     <%- classificationList %>
     <button type="submit" class="addVehicle">Add Vehicle</button>
 </form>
-
+</main>
 <% include('../partials/footer') %>

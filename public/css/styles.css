@@ -353,8 +353,46 @@ input {
   font-size: 30px;
 }
 
+#vehicle {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+#vehicle h1 {
+  text-align: center;
+  align-items: center;
+}
 
+#vehicleForm label {
+  font-size: 20px;
+}
+
+#vehicleForm {
+  text-align: left;
+  max-width: 300px;
+  margin-top: 2rem;
+  border: 1px solid black;
+  padding: 2rem 1rem;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 2rem;
+  border-radius: 10px;
+}
+
+#vehicleForm input {
+  margin-bottom: 10px;
+}
+
+#vehicleForm button {
+  margin-top: 2rem;
+  width: 100%;
+  height: 30px;
+  background-color: rgb(86, 86, 255);
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+}
 
 
 @media only screen and (min-width: 1000px) {
