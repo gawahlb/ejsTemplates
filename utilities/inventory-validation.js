@@ -84,11 +84,10 @@ validate.vehicleRules = () => {
       .isLength({ min: 1 })
       .withMessage("Please provide the vehicle color."), // on error this message is sent.
 
-    body("classificationList")
+    body("classification_id")
       .trim()
       .escape()
       .notEmpty()
-      .isLength({ min: 1 })
       .withMessage("Please provide a vehicle classification."), // on error this message is sent.
     
   ]
@@ -123,15 +122,17 @@ validate.checkClassData = async (req, res, next) => {
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkVehicleData = async (req, res, next) => {
-  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color } = req.body
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let classificationList = await utilities.buildClassificationList();
     res.render("inventory/add-vehicle", {
       errors,
       title: "Create Vehicle",
       nav,
+      classificationList,
       inv_make,
       inv_model,
       inv_year,
@@ -141,6 +142,7 @@ validate.checkVehicleData = async (req, res, next) => {
       inv_price,
       inv_miles,
       inv_color,
+      classification_id,
     })
     return
   }
