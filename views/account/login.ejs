@@ -10,9 +10,9 @@
 
 <div id="loginForm">
 <div id="formFields">
-<form method="POST" action="/account/login" >
+<form method="post" action="/account/login" >
     <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
+    <input type="email" id="email" name="account_email" required><br>
     <label for="accountPassword">Password:</label> 
     <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span> 
     <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
