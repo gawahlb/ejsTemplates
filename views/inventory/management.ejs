@@ -7,5 +7,17 @@
 <a href="/inv/add-classification" class="add-classification">Add New Classification</a>
 
 <a href="/inv/add-vehicle" class="add-vehicle">Add Vehicle to Inventory</a>
+
+<h2>Manage Inventory</h2>
+
+<p>Please select a classification from the list to see the vehicles belonging to that classification.</p>
+
+<%- classificationSelect %>
+<table id="inventoryDisplay"></table>
+<noscript>JavaScript must be enabled to use this page.</noscript>
+
 </main>
+
 <% include('../partials/footer') %>
+
+<script src="../../js/inventory.js"></script>

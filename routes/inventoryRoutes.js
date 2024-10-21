@@ -23,6 +23,12 @@ router.get("/add-classification", invController.createClassification)
 // Route for Adding Vehicle to Inventory
 router.get("/add-vehicle", invController.createVehicle)
 
+router.get("/getInventory/:classificationId", utilities.handleErrors(invController.getInventoryJSON))
+
+router.get("/edit/:invId", utilities.handleErrors(invController.editInvId));
+
+router.get("/delete/:invId", invController.deleteInvId);
+
 // Process the classification
 router.post(
     "/add-classification",
@@ -38,5 +44,10 @@ router.post(
     regValidate.checkVehicleData,
     utilities.handleErrors(invController.registerVehicle)
   )
+
+// Delete Vehicle
+router.post("/delete/", utilities.handleErrors(invController.deleteInvId))
+
+router.post("/update/", utilities.handleErrors(invController.updateInventory))
 
 module.exports = router;

@@ -121,7 +121,7 @@ Util.buildClassificationList = async function (classification_id = null) {
   data.rows.forEach((row) => {
     classificationList += '<option value="' + row.classification_id + '"'
     if (
-      classification_id != null &&
+      //classification_id != null &&
       row.classification_id == classification_id
     ) {
       classificationList += " selected "
