@@ -160,7 +160,7 @@ validate.checkVehicleData = async (req, res, next) => {
       let nav = await utilities.getNav()
       let inv_id = parseInt(req.params.invId)
       let classificationList = await utilities.buildClassificationList();
-      res.render("inventory/add-vehicle", {
+      res.render("inventory/edit-vehicle", {
         errors,
         title: "Edit Vehicle",
         nav,

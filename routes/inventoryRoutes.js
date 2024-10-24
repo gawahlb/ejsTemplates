@@ -27,7 +27,7 @@ router.get("/getInventory/:classificationId", utilities.handleErrors(invControll
 
 router.get("/edit/:invId", utilities.handleErrors(invController.editInvId));
 
-router.get("/delete/:invId", invController.deleteInvId);
+router.get("/delete/:invId", utilities.handleErrors(invController.deleteInvId));
 
 // Process the classification
 router.post(
@@ -46,8 +46,8 @@ router.post(
   )
 
 // Delete Vehicle
-router.post("/delete/", utilities.handleErrors(invController.deleteInvId))
+router.post("/delete/:invId", utilities.handleErrors(invController.deleteInvId))
 
-router.post("/update/", utilities.handleErrors(invController.updateInventory))
+router.post("/edit-vehicle/", utilities.handleErrors(invController.updateInventory))
 
 module.exports = router;

@@ -200,17 +200,17 @@ invCont.getInventoryJSON = async (req, res, next) => {
       nav,
       classificationList: classificationList,
       errors: null,
-      inv_id: itemData.inv_id,
-      inv_make: itemData.inv_make,
-      inv_model: itemData.inv_model,
-      inv_year: itemData.inv_year,
-      inv_description: itemData.inv_description,
-      inv_image: itemData.inv_image,
-      inv_thumbnail: itemData.inv_thumbnail,
-      inv_price: itemData.inv_price,
-      inv_miles: itemData.inv_miles,
-      inv_color: itemData.inv_color,
-      classification_id: itemData.classification_id
+      inv_id: itemData[0].inv_id,
+      inv_make: itemData[0].inv_make,
+      inv_model: itemData[0].inv_model,
+      inv_year: itemData[0].inv_year,
+      inv_description: itemData[0].inv_description,
+      inv_image: itemData[0].inv_image,
+      inv_thumbnail: itemData[0].inv_thumbnail,
+      inv_price: itemData[0].inv_price,
+      inv_miles: itemData[0].inv_miles,
+      inv_color: itemData[0].inv_color,
+      classification_id: itemData[0].classification_id
     })
   }
 
@@ -254,7 +254,7 @@ invCont.updateInventory = async function (req, res, next) {
     inv_color,
     classification_id,
   } = req.body
-  const updateResult = await invModel.updateInventory(
+  const updateResult = await invModel.updateVehicle(
     inv_id,  
     inv_make,
     inv_model,
@@ -269,14 +269,15 @@ invCont.updateInventory = async function (req, res, next) {
   )
 
   if (updateResult) {
-    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    const updateVehicle = updateResult[0]
+    const itemName = updateVehicle.inv_make + " " + updateVehicle.inv_model
     req.flash("notice", `The ${itemName} was successfully updated.`)
     res.redirect("/inv/")
   } else {
     const classificationSelect = await utilities.buildClassificationList(classification_id)
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the insert failed.")
-    res.status(501).render("inventory/edit-inventory", {
+    res.status(501).render("inventory/edit-vehicle", {
     title: "Edit " + itemName,
     nav,
     classificationSelect: classificationSelect,
