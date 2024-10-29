@@ -33,10 +33,13 @@ async function buildRegister(req, res, next) {
 * *************************************** */
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
+  const {account_firstname, account_type} = req.session.user || {}
   res.render("account/account-management", {
     title: "Account Management",
     nav,
     errors: null,
+    account_firstname,
+    account_type,
   })
 }
   
@@ -107,6 +110,9 @@ async function accountLogin(req, res) {
   try {
    if (await bcrypt.compare(account_password, accountData.account_password)) {
    delete accountData.account_password
+   req.session.user = accountData
+   req.session.loggedin = true
+
    const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 })
    if(process.env.NODE_ENV === 'development') {
      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
@@ -120,4 +126,20 @@ async function accountLogin(req, res) {
   }
  }
 
-  module.exports = { buildLogin, buildRegister, buildAccountManagement, registerAccount, accountLogin }
+ /* ****************************************
+ *  Process logout request
+ * ************************************ */
+async function buildLogout(req, res) {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err)
+      return res.redirect('/account')
+    }
+    res.clearCookie('jwt')
+    res.redirect('/')
+  })
+}
+
+
+
+  module.exports = { buildLogin, buildRegister, buildAccountManagement, registerAccount, accountLogin, buildLogout }

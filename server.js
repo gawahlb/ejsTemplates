@@ -33,6 +33,12 @@ app.use(session({
   name: 'sessionId',
 }))
 
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.loggedin || false
+  res.locals.userName = req.session.user ? req.session.user.account_email : ''
+  next()
+})
+
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
@@ -71,6 +77,7 @@ app.use("/account", accountRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+
 
 /* ***********************
 * Express Error Handler

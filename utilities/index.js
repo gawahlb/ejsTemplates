@@ -1,3 +1,4 @@
+const { log } = require("console")
 const invModel = require("../models/inventory-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
@@ -166,10 +167,25 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    next()
-  } else {
+  const token = req.cookies.jwt
+  if (!token) {
     req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+  try {
+    const loginToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    const {account_type} = loginToken
+
+    if(account_type == "Employee" || account_type == "Admin") {
+      req.user = loginToken
+      next()
+    } else {
+      req.flash("notice", "No permission to access.")
+      return res.redirect("/account/login")
+    }
+  } catch (error) {
+    console.error("Verification failed: ", error)
+    req.flash("notice", "Invalid token. Try again.")
     return res.redirect("/account/login")
   }
  }

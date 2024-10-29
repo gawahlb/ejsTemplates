@@ -6,7 +6,17 @@
       res.redirect('/')
     } %>
 
-<%- messages() %>
+<p%- messages() %>
+
+<% if (account_type == "Employee" || account_type == "Admin") { %>
+  <h2>Welcome <%= account_firstname %></h2>
+  <h3>Inventory Management</h3>
+  <a href="/inv">Access Inventory Management</a>
+<% } else { %>
+  <h2>Welcome Basic</h2>
+<% } %>
+
+<a href="/account/update">Update Account Information</a>
 
 <p>You're logged in</p>
 

@@ -18,16 +18,16 @@ router.get("/intentional-error", invController.intentionalError);
 router.get("/", invController.managementView)
 
 // Route for Adding Classification
-router.get("/add-classification", invController.createClassification)
+router.get("/add-classification", utilities.checkLogin, invController.createClassification)
 
 // Route for Adding Vehicle to Inventory
-router.get("/add-vehicle", invController.createVehicle)
+router.get("/add-vehicle", utilities.checkLogin, invController.createVehicle)
 
-router.get("/getInventory/:classificationId", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/getInventory/:classificationId", utilities.checkLogin, utilities.handleErrors(invController.getInventoryJSON))
 
-router.get("/edit/:invId", utilities.handleErrors(invController.editInvId));
+router.get("/edit/:invId", utilities.checkLogin, utilities.handleErrors(invController.editInvId));
 
-router.get("/delete/:invId", utilities.handleErrors(invController.deleteInvId));
+router.get("/delete/:invId", utilities.checkLogin, utilities.handleErrors(invController.deleteInvId));
 
 // Process the classification
 router.post(
