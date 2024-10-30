@@ -6,7 +6,7 @@
       res.redirect('/')
     } %>
 
-<p%- messages() %>
+<%- messages() %>
 
 <% if (account_type == "Employee" || account_type == "Admin") { %>
   <h2>Welcome <%= account_firstname %></h2>

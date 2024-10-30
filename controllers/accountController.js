@@ -42,6 +42,18 @@ async function buildAccountManagement(req, res, next) {
     account_type,
   })
 }
+
+/* ****************************************
+*  Deliver account management view
+* *************************************** */
+async function buildUpdate(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    errors: null,
+  })
+}
   
 
 /* ****************************************
@@ -140,6 +152,76 @@ async function buildLogout(req, res) {
   })
 }
 
+/* ****************************************
+ *  Process password change
+ * ************************************ */
+
+async function updatePassword(req, res) {
+  const {current_password, new_password} = req.body
+  const accountId = req.session.user.id
+  const errors = []
+
+  if(!new_password || new_password.length < 12) {
+    errors.push("Password must be at least 12 characters.")
+  }
+
+  if(errors.length > 0) {
+    req.flash('errors', errors)
+    return res.render('account/update-account', {account_id: accountId})
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(new_password, 10)
+
+    const passwordResult = await accountModel.updatePassword(accountId, hashedPassword)
+
+    if(passwordResult) {
+      req.flash('success', 'Password updated successfully!')
+    } else {
+      req.flash('error', 'Error while updating password.')
+    }
+
+    return res.redirect('/account/account-management')
+  } catch(error) {
+    console.error('Error updating password: ', error)
+    req.flash('error', 'Error while updating password.')
+    return res.render('account/update-account', {account_id: accountId,})
+  }
+
+}
+
+/* ****************************************
+ *  Process account change
+ * ************************************ */
+
+async function updateAccount(req, res) {
+  const {account_firstname, account_lastname, account_email} = req.body
+  const accountId = req.session.user.id
+
+  const regResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    accountId
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'re account has been updated ${account_firstname}.`
+    )
+    res.status(201).render("account/", {
+      title: "Account Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update", {
+      title: "Update Account",
+      nav,
+    })
+  }
+}
 
 
-  module.exports = { buildLogin, buildRegister, buildAccountManagement, registerAccount, accountLogin, buildLogout }
+  module.exports = { buildLogin, buildRegister, buildAccountManagement, registerAccount, accountLogin, buildLogout, updatePassword, updateAccount, buildUpdate }
