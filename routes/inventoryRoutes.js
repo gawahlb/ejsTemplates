@@ -29,6 +29,8 @@ router.get("/edit/:invId", utilities.checkLogin, utilities.handleErrors(invContr
 
 router.get("/delete/:invId", utilities.checkLogin, utilities.handleErrors(invController.deleteInvId));
 
+router.get("/delete-classification/", utilities.handleErrors(invController.buildClassificationDelete))
+
 // Process the classification
 router.post(
     "/add-classification",
@@ -47,6 +49,9 @@ router.post(
 
 // Delete Vehicle
 router.post("/delete/:invId", utilities.handleErrors(invController.deleteInvId))
+
+// Delete Classification
+router.post("/delete-classification/:classificationId", utilities.handleErrors(invController.deleteClassificationId))
 
 router.post("/edit-vehicle/", utilities.handleErrors(invController.updateInventory))
 

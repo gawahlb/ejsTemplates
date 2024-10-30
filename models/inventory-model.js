@@ -7,6 +7,21 @@ async function getClassifications(){
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
 }
 
+/* ***************************
+ *  Get classifications by classification_id
+ * ************************** */
+async function getClassificationById(classification_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.classification
+      WHERE classification = $1`,
+      [classification_id]
+    )
+    return data.rows
+  } catch (error) {
+    console.error("getclassificationbyid error " + error)
+  }
+}
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
@@ -79,4 +94,10 @@ async function updateVehicle(inv_make, inv_model, inv_year, inv_description, inv
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addVehicle, updateVehicle};
+async function deleteClassificationById(classification_id) {
+  const sql = "DELETE FROM public.classification WHERE classification_id = $1 RETURNING *";
+  return await pool.query(sql, [classification_id]);
+}
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInvId, addClassification, addVehicle, updateVehicle, getClassificationById, deleteClassificationById};

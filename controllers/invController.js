@@ -237,6 +237,47 @@ invCont.getInventoryJSON = async (req, res, next) => {
     }
 
     /* ***************************
+ *  Process Classification Delete
+ * ************************** */
+
+    async function deleteClassificationId(req, res, next) {
+      const classification_id = req.params.classification_id
+      const deleteClass = await invModel.deleteClassificationById(classification_id)
+
+      if (deleteClass.rowCount > 0) {
+        req.flash("notice", "Delete Successful!")
+        res.redirect("/inv")
+      } else {
+        req.flash("notice", "Delete Failed! Something went wrong. Please try again.")
+        res.redirect(`/inv/delete-classification/${classification_id}`)
+      }
+      }
+     
+
+
+
+
+    /* ***************************
+ *  Delete Classification View
+ * ************************** */
+
+    async function buildClassificationDelete(req, res, next) {
+      const classification_id = parseInt(req.params.classificationId)
+      const classificationList = await utilities.buildClassificationList()
+      let nav = await utilities.getNav()
+
+      res.render("inventory/delete-classification", {
+        title: "Delete Classification", 
+        classificationList: classificationList,
+        errors: null,
+        classification_id,
+        nav,
+      })
+      }
+    
+
+
+    /* ***************************
  *  Update Inventory Data
  * ************************** */
 invCont.updateInventory = async function (req, res, next) {
@@ -297,4 +338,4 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
-module.exports = {...invCont, createClassification, createVehicle, registerClassification, registerVehicle, editInvId, deleteInvId}
+module.exports = {...invCont, createClassification, createVehicle, registerClassification, registerVehicle, editInvId, deleteInvId, deleteClassificationId, buildClassificationDelete}
